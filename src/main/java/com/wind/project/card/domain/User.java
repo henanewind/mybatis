@@ -7,16 +7,16 @@ package com.wind.project.card.domain;
  * @sine: 1.0
  */
 public class User {
-    private int id;
+    private int userId;
     private String userName;
     private String password;
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {
@@ -35,8 +35,8 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String userName, String password) {
-        this.id = id;
+    public User(int userId, String userName, String password) {
+        this.userId = userId;
         this.userName = userName;
         this.password = password;
     }
