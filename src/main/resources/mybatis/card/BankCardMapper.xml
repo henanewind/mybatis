@@ -9,9 +9,21 @@
         <result property="userId" column="user_id"/>
         <result property="bankName" column="bank_name"/>
         <result property="flag" column="flag"/>
+        <!--discriminator 鉴别器级联-->
+        <discriminator javaType="int" column="flag">
+            <case value="1" resultMap="debitCardMapper"></case>
+            <case value="2" resultMap="creditCardMapper"></case>
+        </discriminator>
     </resultMap>
+
+    <resultMap id="debitCardMapper" type="DebitCard" extends="bankCardResult"/>
+
+    <resultMap id="creditCardMapper" type="CreditCard" extends="bankCardResult">
+        <result property="creditLine" column="credit_line"/>
+    </resultMap>
+
     <!--    如果数据库名称和字段名称一致，可以不配置 resultMap ，直接使用 resultType -->
     <select id="findBankCardsByUserId" parameterType="Long" resultMap="bankCardResult">
-            SELECT id, user_id, bank_name, flag FROM bank_card WHERE user_id = #{userId}
+            SELECT id, user_id, bank_name, flag, credit_line, deposit FROM bank_card WHERE user_id = #{userId}
     </select>
 </mapper>
