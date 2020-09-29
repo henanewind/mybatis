@@ -62,4 +62,26 @@ public class UserServiceImpl implements IUserService {
     public int insertUser(User user) {
         return userMapper.insertUser(user);
     }
+
+    /**
+     * 更新用户信息
+     *
+     * @param user
+     * @return
+     */
+    @Override
+    public int updateUser(User user) {
+        return userMapper.updateUser(user);
+    }
+
+    /**
+     * 删除指定id的用户
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public int deleteUserById(Long userId) {
+        return userMapper.deleteUserById(userId);
+    }
 }

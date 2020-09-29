@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wind.project.card.mapper.CardMapper">
+    <resultMap id="cardMap" type="Card">
+        <id property="id" column="id"></id>
+        <result property="userId" column="user_id"/>
+        <result property="name" column="name"/>
+        <result property="address" column="address"/>
+        <collection property="bankCards" column="user_id"
+                    select="com.wind.project.card.mapper.BankCardMapper.findBankCardsByUserId"/>
+    </resultMap>
+
+    <select id="findCardByUserId" parameterType="Long" resultMap="cardMap">
+        SELECT id, user_id, name, address FROM card WHERE user_id = #{userId}
+   </select>
+</mapper>

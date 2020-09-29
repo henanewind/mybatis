@@ -1,8 +1,10 @@
 package com.wind.framework.config;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
 /**
  * spring security配置
@@ -29,6 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         // 任意匿名用户的任何请求都允许访问
-        httpSecurity.anonymous().and().authorizeRequests().anyRequest().permitAll();
+//        httpSecurity.authorizeRequests().anyRequest().permitAll(); // 只允许get请求
+        httpSecurity
+                // CRSF禁用，因为不使用session
+                .csrf().disable()
+                // 过滤请求
+                .authorizeRequests()
+                .antMatchers("/**").anonymous();
     }
 }

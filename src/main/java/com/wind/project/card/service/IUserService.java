@@ -43,4 +43,19 @@ public interface IUserService {
      */
     public int insertUser(User user);
 
+    /**
+     * 更新用户
+     *
+     * @param user
+     * @return
+     */
+    int updateUser(User user);
+
+    /**
+     * 删除指定id的用户
+     *
+     * @param userId
+     * @return
+     */
+    int deleteUserById(Long userId);
 }

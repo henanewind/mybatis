@@ -10,6 +10,7 @@ public class User {
     private int userId;
     private String userName;
     private String password;
+    private Card card;
 
     public int getUserId() {
         return userId;
@@ -33,6 +34,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
     }
 
     public User(int userId, String userName, String password) {
