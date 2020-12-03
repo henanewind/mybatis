@@ -36,6 +36,19 @@ spring:
       # 热部署开关
       enabled: true
 
+  # 持久化支持
+  jpa:
+    database: mysql
+    show-sql: true #开发阶段,打印要执行的sql语句.
+    hibernate:
+      ddl-auto: update
+
+  # spring 整合 ehcache
+  cache:
+    ehcache:
+      config: classpath:ehcache/ehcache.xml
+
+
 # MyBatis配置
 mybatis:
   # 搜索指定包别名
