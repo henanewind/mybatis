@@ -55,8 +55,9 @@
            maxElementsOnDisk="10000000"
            diskExpiryThreadIntervalSeconds="120"
            memoryStoreEvictionPolicy="LRU">
-        <!-- overflowToDisk="false"-->
-
-        <!--        <persistence strategy="localTempSwap"/>-->
+        <!--           overflowToDisk="true">-->
+        <!--        指定下面持久化存储策略和overflowToDisk效果一样都会存盘（存盘对象必须实现序列化Serializable接口）-->
+        <!--        存盘路径：C:\Users\ust\AppData\Local\Temp\1\Tmp_EhCache-->
+        <persistence strategy="localTempSwap"/>
     </cache>
 </ehcache>

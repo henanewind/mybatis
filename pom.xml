@@ -30,6 +30,7 @@
         <poi.version>3.17</poi.version>
         <oshi.version>3.9.1</oshi.version>
         <velocity.version>1.7</velocity.version>
+        <shiro.version>1.7.0</shiro.version>
     </properties>
 
     <dependencies>
@@ -95,6 +96,28 @@
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
         </dependency>
+
+        <!--Shiro核心框架 -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+
+        <!-- Shiro使用Srping框架 -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+
+        <!-- Shiro使用EhCache缓存框架 -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+
         <!-- redis 缓存操作 -->
         <!--        <dependency>-->
         <!--            <groupId>org.springframework.boot</groupId>-->

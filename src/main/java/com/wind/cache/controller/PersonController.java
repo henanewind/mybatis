@@ -32,7 +32,7 @@ public class PersonController {
     @GetMapping("/{id}")
     public ResponseEntity<Person> findPersonById(@PathVariable Long id) {
         Person person = service.findById(id);
-        log.warn("person hashcode = {}", person.hashCode());
+        log.warn("person hashcode = {}", person == null ? 0 : person.hashCode());
         HttpStatus status = person == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
         return new ResponseEntity(person, status);
     }

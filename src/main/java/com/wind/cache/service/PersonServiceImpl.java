@@ -1,13 +1,18 @@
 package com.wind.cache.service;
 
 import com.wind.cache.domain.Person;
-import com.wind.project.card.domain.User;
+import com.wind.common.constant.Constants;
+import com.wind.common.utils.CacheUtils;
 import com.wind.cache.repository.PersonRepository;
+import com.wind.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * 描述：
@@ -20,6 +25,14 @@ public class PersonServiceImpl implements PersonService {
     @Autowired
     private PersonRepository repository;
 
+    @PostConstruct
+    public void init() {
+        List<Person> personList = repository.findAll();
+        for (Person person : personList) {
+            CacheUtils.put(getCacheName(), getCacheKey(person.getId()), person);
+        }
+    }
+
     /**
      * 注解@Cacheable:查询的时候才使用该注解!
      * 注意:在Cacheable注解中支持EL表达式
@@ -31,7 +44,19 @@ public class PersonServiceImpl implements PersonService {
     @Cacheable(value = "person", key = "#id", unless = "#result eq null")
     @Override
     public Person findById(Long id) {
-        return repository.findById(id).orElse(null);
+        // 1.判断缓存中是否存在 person
+        Person person = null;
+        person = Person.class.cast(CacheUtils.get(getCacheName(), getCacheKey(id)));
+        if (StringUtils.isNotNull(person)) {
+            return person;
+        }
+        // 2.缓存中没有查到，需要重新搜索数据库
+        person = repository.findById(id).orElse(null);
+        if (StringUtils.isNotNull(person)) {
+            // 3、将从数据库中查到的数据重新存到缓存中
+            CacheUtils.put(getCacheName(), getCacheKey(person.getId()), person);
+        }
+        return person;
     }
 
     /**
@@ -54,5 +79,24 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
+    }
+
+    /**
+     * 获取cache name
+     *
+     * @return 缓存名
+     */
+    private String getCacheName() {
+        return Constants.PERSON_CACHE;
+    }
+
+    /**
+     * 设置cache key
+     *
+     * @param configKey 参数键
+     * @return 缓存键key
+     */
+    private String getCacheKey(Long configKey) {
+        return String.format("%s%d", Constants.PERSON_KEY, configKey);
     }
 }

@@ -1,5 +1,7 @@
 package com.wind.cache.domain;
 
+import com.wind.common.core.BaseEntity;
+
 import javax.persistence.*;
 import java.io.NotSerializableException;
 import java.io.Serializable;
@@ -14,7 +16,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "person")
-public class Person /*implements Serializable*/ {
+public class Person extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
